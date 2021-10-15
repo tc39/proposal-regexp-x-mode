@@ -199,7 +199,7 @@ The following is a high-level list of tasks to progress through each stage of th
 * [x] Identified a "[champion][Champion]" who will advance the addition.  
 * [x] [Prose][Prose] outlining the problem or need and the general shape of a solution.  
 * [x] Illustrative [examples][Examples] of usage.  
-* [ ] ~~High-level [API][API].~~  
+* [x] High-level [API][API].  
 
 ### Stage 2 Entrance Criteria
 
