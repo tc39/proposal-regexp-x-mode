@@ -4,7 +4,7 @@
       "hasChampion": true,
       "championName": "Ron Buckton",
       "championGithub": "rbuckton",
-      "spec": "https://rbuckton.github.io/proposal-regexp-modifiers",
+      "spec": "https://rbuckton.github.io/proposal-regexp-x-mode",
       "stage": "0",
       "sections": [
         "prior-art",
