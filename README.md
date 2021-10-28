@@ -6,7 +6,7 @@
 <!--#region:status-->
 ## Status
 
-**Stage:** 0  
+**Stage:** 1  
 **Champion:** Ron Buckton ([@rbuckton](https://github.com/rbuckton))  
 
 _For detailed status of this proposal see [TODO](#todo), below._  
@@ -20,38 +20,6 @@ _For detailed status of this proposal see [TODO](#todo), below._
 
 <!--#region:motivations-->
 # Motivations
-
-From https://github.com/rbuckton/proposal-regexp-features:
-> ECMAScript regular expressions have slowly improved over the years to adopt new 
-> functionality commonly present in other languages, including:
-> 
-> - Unicode Support
-> - Named Capture Groups
-> - Match Indices
-> 
-> However, a large majority of other languages and libraries have a common set of 
-> features that ECMAScript regular expressions currently lack.
-> Some of these features improve performance in degenerative cases such as backtracking 
-> in complex patterns. Some of these features introduce
-> new tools for developers to write more powerful regular expressions.
-> 
-> As a result, ECMAScript developers wishing to leverage these capabilities are left with 
-> few options, relying on native bindings to third-party
-> libraries in environments such as NodeJS, or server-side evaluation.
-> 
-> There are numerous applications for extending the ECMAScript regular expression feature 
-> set, including:
-> 
-> - In-browser support for TextMate grammars for web based editors/IDEs.
-> - Improved performance for expressions through possessive quantifiers and backtracking 
->   control.
-> - RegExp-based parsers that can support balanced brackets/parens.
-> - Documenting complex patterns *in the pattern itself*.
-> - Improved readability through the use of multi-line patterns and insignificant 
->   whitespace.
-
-> NOTE: See https://github.com/rbuckton/proposal-regexp-features for an overview of
-> how this proposal fits into other possible future features for Regular Expressions.
 
 The RegExp Extended mode is a feature commonly supported amongst multiple regular expression engines that makes it possible
 to write regular expressions that are easier to read and understand through the introduction of insignificant white space
@@ -99,13 +67,17 @@ The extended mode (`x`) flag treats unescaped whitespace characters as insignifi
 > NOTE: Perl's original `x`-mode treated whitespace as insignificant anywhere within a pattern *except* for within character classes. Perl v5.26 introduced the `xx` flag which
 > also ignores non-escaped SPACE and TAB characters. Should we chose to adopt the `x`-mode flag, we could opt to treat it as Perl's `xx` mode at the outset.
 
-## Comments
+## Inline Comments
 
 **Prior Art:** Perl, PCRE, Boost.Regex, .NET, Oniguruma, Hyperscan, ICU, Glib/GRegex ([feature comparison](https://rbuckton.github.io/regexp-features/features/comments.html))
 
-A comment is a sequence of characters that is ignored by pattern matching and can be used to document a pattern.
+An inline comment is a sequence of characters that is ignored by pattern matching and can be used to document a pattern.
 
-- `(?#comment)` &mdash; The entire expression is removed from the pattern. The text of *comment* may not contain other `(` or `)` characters.
+- `(?#comment)` &mdash; The entire expression is removed from the pattern. 
+  - The text of *comment* may not contain other `(` or `)` characters (instead, they must be escaped).
+  - When parsing a _RegularExpressionLiteral_, the text of *comment* also may not contain `/` (unless it is escaped).
+    - *NOTE: It may be necessary to escape `[` and `]` as well, unless we are able to change the definition for _RegularExpressionBody_ in the specification
+      so as to permit an unbalanced pair of `[` and `]` within *comment*. See [Issue #1](https://github.com/rbuckton/proposal-regexp-x-mode/issues/1).*
 
 > NOTE: This has no conflicts with existing syntax, as ECMAScript currently produces an error for this syntax in both `u` and non-`u` modes.
 
@@ -188,6 +160,11 @@ const re = new RegExp(String.raw`
 
 * [Title](url)   -->
 <!--#endregion:references-->
+
+# History
+
+- October 27th, 2021 &mdash; Proposed for Stage 1 ([slides](https://1drv.ms/p/s!AjgWTO11Fk-Tkfl_R_GWK0hIILFQDg?e=FjB377))
+  - Outcome: Advanced to Stage 1
 
 <!--#region:todo-->
 # TODO
